@@ -1,0 +1,6 @@
+{
+  "name": "R.D. Career Classes - Agra",
+  "description": "Agra's premier competitive exam institute founded by Mr. Ravi Pachori Sir (Ex-Assistant Commandant, Ex-SI). Expert preparation for Airforce X/Y, SSC CGL/GD/CPO, Navy SSR, and UP Police.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
