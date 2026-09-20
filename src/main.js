@@ -1,33 +1,8 @@
-// Vanilla JavaScript / TypeScript logic for R.D. Career Classes
+// Vanilla JavaScript for R.D. Career Classes (Agra)
 import './index.css';
 
-// Declare global types for TypeScript
-declare global {
-  interface Window {
-    sendInquiry: (event: Event) => void;
-    openInquiryModal: (courseName?: string) => void;
-    closeInquiryModal: () => void;
-    toggleMobileMenu: () => void;
-    toggleFloatingChat: () => void;
-    copyAddress: () => void;
-    selectShortcutDemo: (demoId: string) => void;
-  }
-}
-
-// Math Shortcut Demos data
-interface ShortcutDemo {
-  id: string;
-  title: string;
-  category: string;
-  problem: string;
-  traditionalTime: string;
-  traditionalSteps: string[];
-  raviTrick: string;
-  raviTime: string;
-  raviExplanation: string;
-}
-
-const SHORTCUT_DEMOS: ShortcutDemo[] = [
+// Math Shortcut Demos dataset
+const SHORTCUT_DEMOS = [
   {
     id: 'compound-interest',
     title: 'Compound Interest Rate Trick',
@@ -80,20 +55,22 @@ const SHORTCUT_DEMOS: ShortcutDemo[] = [
   }
 ];
 
-// 1. WhatsApp form submission function (Exact logic requested by user)
-export function sendInquiry(event: Event): void {
-  event.preventDefault();
-  const nameEl = document.getElementById('name') as HTMLInputElement | null;
-  const phoneEl = document.getElementById('phone') as HTMLInputElement | null;
-  const courseEl = document.getElementById('course') as HTMLSelectElement | null;
-  const categoryEl = document.getElementById('category') as HTMLSelectElement | null;
+// 1. WhatsApp form submission function
+export function sendInquiry(event) {
+  if (event && event.preventDefault) {
+    event.preventDefault();
+  }
+  const nameEl = document.getElementById('name');
+  const phoneEl = document.getElementById('phone');
+  const courseEl = document.getElementById('course');
+  const categoryEl = document.getElementById('category');
 
-  const name = nameEl ? nameEl.value : '';
-  const phone = phoneEl ? phoneEl.value : '';
+  const name = nameEl ? nameEl.value.trim() : '';
+  const phone = phoneEl ? phoneEl.value.trim() : '';
   const course = courseEl ? courseEl.value : '';
   const category = categoryEl ? categoryEl.value : 'General';
 
-  if (!name.trim() || !phone.trim()) {
+  if (!name || !phone) {
     alert('Please enter your Name and WhatsApp Contact Number.');
     return;
   }
@@ -108,7 +85,7 @@ export function sendInquiry(event: Event): void {
 
   window.open(`https://wa.me/919808124401?text=${msg}`, '_blank');
 
-  // Show inline success message
+  // Show inline success confirmation banner
   const statusEl = document.getElementById('inquiry-status');
   if (statusEl) {
     statusEl.classList.remove('hidden');
@@ -119,19 +96,21 @@ export function sendInquiry(event: Event): void {
 }
 
 // 2. Modal Inquiry Submission
-export function sendModalInquiry(event: Event): void {
-  event.preventDefault();
-  const nameEl = document.getElementById('modal-name') as HTMLInputElement | null;
-  const phoneEl = document.getElementById('modal-phone') as HTMLInputElement | null;
-  const courseEl = document.getElementById('modal-course') as HTMLSelectElement | null;
-  const timingEl = document.getElementById('modal-timing') as HTMLSelectElement | null;
+export function sendModalInquiry(event) {
+  if (event && event.preventDefault) {
+    event.preventDefault();
+  }
+  const nameEl = document.getElementById('modal-name');
+  const phoneEl = document.getElementById('modal-phone');
+  const courseEl = document.getElementById('modal-course');
+  const timingEl = document.getElementById('modal-timing');
 
-  const name = nameEl ? nameEl.value : '';
-  const phone = phoneEl ? phoneEl.value : '';
+  const name = nameEl ? nameEl.value.trim() : '';
+  const phone = phoneEl ? phoneEl.value.trim() : '';
   const course = courseEl ? courseEl.value : 'Airforce X & Y Group / Agniveer';
   const timing = timingEl ? timingEl.value : 'Morning Batch (8:00 AM)';
 
-  if (!name.trim() || !phone.trim()) {
+  if (!name || !phone) {
     alert('Please provide your name and WhatsApp number.');
     return;
   }
@@ -149,19 +128,21 @@ export function sendModalInquiry(event: Event): void {
 }
 
 // 3. Floating WhatsApp Form Submission
-export function sendFloatingInquiry(event: Event): void {
-  event.preventDefault();
-  const nameEl = document.getElementById('float-name') as HTMLInputElement | null;
-  const phoneEl = document.getElementById('float-phone') as HTMLInputElement | null;
-  const courseEl = document.getElementById('float-course') as HTMLSelectElement | null;
-  const categoryEl = document.getElementById('float-category') as HTMLSelectElement | null;
+export function sendFloatingInquiry(event) {
+  if (event && event.preventDefault) {
+    event.preventDefault();
+  }
+  const nameEl = document.getElementById('float-name');
+  const phoneEl = document.getElementById('float-phone');
+  const courseEl = document.getElementById('float-course');
+  const categoryEl = document.getElementById('float-category');
 
-  const name = nameEl ? nameEl.value : '';
-  const phone = phoneEl ? phoneEl.value : '';
+  const name = nameEl ? nameEl.value.trim() : '';
+  const phone = phoneEl ? phoneEl.value.trim() : '';
   const course = courseEl ? courseEl.value : 'Airforce X & Y Group / Agniveer';
   const category = categoryEl ? categoryEl.value : 'General';
 
-  if (!name.trim() || !phone.trim()) {
+  if (!name || !phone) {
     alert('Please enter your name and phone number.');
     return;
   }
@@ -179,9 +160,9 @@ export function sendFloatingInquiry(event: Event): void {
 }
 
 // 4. Modal Dialog Controllers
-export function openInquiryModal(courseName?: string): void {
+export function openInquiryModal(courseName) {
   const modal = document.getElementById('inquiry-modal');
-  const courseSelect = document.getElementById('modal-course') as HTMLSelectElement | null;
+  const courseSelect = document.getElementById('modal-course');
   if (courseSelect && courseName) {
     courseSelect.value = courseName;
   }
@@ -192,7 +173,7 @@ export function openInquiryModal(courseName?: string): void {
   }
 }
 
-export function closeInquiryModal(): void {
+export function closeInquiryModal() {
   const modal = document.getElementById('inquiry-modal');
   if (modal) {
     modal.classList.add('hidden');
@@ -202,7 +183,7 @@ export function closeInquiryModal(): void {
 }
 
 // 5. Mobile Menu Toggle
-export function toggleMobileMenu(): void {
+export function toggleMobileMenu() {
   const menu = document.getElementById('mobile-nav-menu');
   const iconOpen = document.getElementById('menu-icon-open');
   const iconClose = document.getElementById('menu-icon-close');
@@ -221,7 +202,7 @@ export function toggleMobileMenu(): void {
 }
 
 // 6. Floating Chat Drawer Toggle
-export function toggleFloatingChat(): void {
+export function toggleFloatingChat() {
   const drawer = document.getElementById('floating-chat-drawer');
   if (drawer) {
     drawer.classList.toggle('hidden');
@@ -229,22 +210,28 @@ export function toggleFloatingChat(): void {
 }
 
 // 7. Copy Address with feedback
-export function copyAddress(): void {
+export function copyAddress() {
   const addressText = 'Diamond City, Gwalior Rd, Nagla Padma, Agra, Rohta, Uttar Pradesh 282009';
-  navigator.clipboard.writeText(addressText).then(() => {
-    const btn = document.getElementById('copy-address-btn');
-    if (btn) {
-      const origText = btn.innerHTML;
-      btn.innerHTML = '<span>✓ Copied to Clipboard!</span>';
-      setTimeout(() => {
-        btn.innerHTML = origText;
-      }, 2500);
-    }
-  });
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(addressText).then(() => {
+      const btn = document.getElementById('copy-address-btn');
+      if (btn) {
+        const origText = btn.innerHTML;
+        btn.innerHTML = '<span>✓ Copied to Clipboard!</span>';
+        setTimeout(() => {
+          btn.innerHTML = origText;
+        }, 2500);
+      }
+    }).catch(() => {
+      alert('Address: ' + addressText);
+    });
+  } else {
+    alert('Address: ' + addressText);
+  }
 }
 
 // 8. Math Shortcut Tab Switcher
-export function selectShortcutDemo(demoId: string): void {
+export function selectShortcutDemo(demoId) {
   const demo = SHORTCUT_DEMOS.find((d) => d.id === demoId) || SHORTCUT_DEMOS[0];
 
   // Update tabs active state
@@ -289,8 +276,10 @@ export function selectShortcutDemo(demoId: string): void {
   }
 }
 
-// Attach all functions to window for direct HTML onclick / onsubmit attributes
+// Expose functions globally on window for inline HTML onclick/onsubmit handlers
 window.sendInquiry = sendInquiry;
+window.sendModalInquiry = sendModalInquiry;
+window.sendFloatingInquiry = sendFloatingInquiry;
 window.openInquiryModal = openInquiryModal;
 window.closeInquiryModal = closeInquiryModal;
 window.toggleMobileMenu = toggleMobileMenu;
@@ -298,8 +287,8 @@ window.toggleFloatingChat = toggleFloatingChat;
 window.copyAddress = copyAddress;
 window.selectShortcutDemo = selectShortcutDemo;
 
-// Initialize on DOM Ready
-document.addEventListener('DOMContentLoaded', () => {
+// Initialization function for events
+function initApp() {
   // Mobile Nav link click closes menu
   document.querySelectorAll('.mobile-nav-link').forEach((link) => {
     link.addEventListener('click', () => {
@@ -338,7 +327,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Escape key closes modal
+  // Escape key closes modal & float drawer
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       closeInquiryModal();
@@ -346,4 +335,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (floatDrawer) floatDrawer.classList.add('hidden');
     }
   });
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
